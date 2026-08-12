@@ -1,0 +1,27 @@
+services:
+  app:
+    build: .
+    container_name: 5x5-game
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./data:/app/data
+    environment:
+      - JWT_SECRET=${JWT_SECRET:-}
+      - ADMIN_USERNAME=${ADMIN_USERNAME:-admin}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-5x5admin}
+      - SEED_DEMO_DATA=${SEED_DEMO_DATA:-false}
+      - FOOTBALL_V2_BETA_LOBBY=${FOOTBALL_V2_BETA_LOBBY:-true}
+      - PORT=3000
+    restart: unless-stopped
+
+  # Cloudflare Tunnel - Pi'ye deploy ederken aktif et
+  # cloudflared:
+  #   image: cloudflare/cloudflared:latest
+  #   container_name: 5x5-tunnel
+  #   command: tunnel run
+  #   environment:
+  #     - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+  #   restart: unless-stopped
+  #   depends_on:
+  #     - app

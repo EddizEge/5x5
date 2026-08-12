@@ -1,0 +1,32 @@
+# Dependencies and local configuration
+node_modules/
+.env
+.env.*
+!.env.example
+
+# Runtime database and user data
+/data/*
+!/data/.gitkeep
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+
+# Logs, temporary output, and local work artifacts
+*.log
+docker_logs.txt
+temp_result.txt
+/artifacts/
+/scratch/
+/.codex-video-work/
+/.tmp-publish-check/
+/docs/.qa-*.png
+add_chars.js
+blank.yml
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

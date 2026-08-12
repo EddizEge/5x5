@@ -1,0 +1,38 @@
+{
+  "name": "5x5",
+  "version": "1.0.0",
+  "description": "5X5 - Multiplayer text-based simulation game",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "test:cs-combat": "node scripts/test-cs-combat.js",
+    "test:cs-bomb-damage": "node scripts/test-cs-bomb-damage.js",
+    "test:cs-economy": "node scripts/test-cs-economy.js",
+    "test:cs-utility": "node scripts/test-cs-utility.js",
+    "test:cs-utility-decisions": "node scripts/test-cs-utility-decisions.js",
+    "test:cs-sound-intelligence": "node scripts/test-cs-sound-intelligence.js",
+    "test:cs-team-tactics": "node scripts/test-cs-team-tactics.js",
+    "test:cs-team-tactics-integration": "node scripts/test-cs-team-tactics-integration.js",
+    "test:cs-dust2-report-tactics": "node scripts/test-cs-dust2-report-tactics.js",
+    "test:cs-ground-inventory": "node scripts/test-cs-ground-inventory.js",
+    "test:cs-round-decisions": "node scripts/test-cs-round-decisions.js",
+    "test:cs-round-tempo": "node scripts/test-cs-round-tempo.js",
+    "test:cs-plant-objective": "node scripts/test-cs-plant-objective.js",
+    "test:cs-force-objective-defuse": "node scripts/test-cs-force-objective-defuse.js",
+    "test:cs-spatial": "node scripts/test-cs-spatial.js",
+    "test:cs-beta-release": "node scripts/test-cs-beta-release.js",
+    "test:football-decisions": "node scripts/test-football-decisions.js",
+    "test:football-v2-world": "node scripts/test-football-v2-world.js",
+    "test:football-v2-rollout": "node scripts/test-football-v2-rollout.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "socket.io": "^4.7.5",
+    "better-sqlite3": "^11.3.0",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "dotenv": "^16.4.5",
+    "cors": "^2.8.5"
+  }
+}

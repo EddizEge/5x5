@@ -1,0 +1,14 @@
+.git
+.github
+node_modules
+.env
+.env.*
+!.env.example
+data
+artifacts
+scratch
+.codex-video-work
+*.log
+docker_logs.txt
+temp_result.txt
+

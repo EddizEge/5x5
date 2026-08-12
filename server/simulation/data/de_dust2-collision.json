@@ -1,0 +1,11 @@
+{
+  "map": "de_dust2",
+  "provider": "Awpy",
+  "source": "https://awpycs.com/17595823/tris.zip",
+  "patch": "17595823",
+  "encoding": "9 little-endian float32 values per triangle",
+  "triangleCount": 513783,
+  "byteLength": 18496188,
+  "sha256": "f87504f1a56b04ae70d0872cabf7dc73443439be615dfb88d7d5f42892c09a51",
+  "importedAt": "2026-07-29T18:31:46.932Z"
+}
