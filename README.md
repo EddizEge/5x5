@@ -21,7 +21,9 @@ Kartlarını seç, takımını kur, taktiğini belirle ve beş farklı branşta 
 | Oyun modları | Basit, Taktiksel ve deneysel Beta lobileri |
 | Futbol V2 | Halı Saha ve FIFA için konumsal tam maç, xG/xA ve canlı oyuncu notları |
 | Counter-Strike Beta | Gerçek Dust II nav ağı, ekonomi, utility, ses, görüş ve dünya durumlu raundlar |
-| Yönetim | Karakter, dönem, puan ve taktik değişimlerini yöneten admin paneli |
+| Kart yönetimi | Karakter ve dönem kartı oluşturma, LoL, Valorant, CS, Halı Saha ve FIFA için 0–100 rating belirleme |
+| Kullanıcı yönetimi | Oyuncu oluşturma, sunucu atama ve Oyuncu / Server Admin / Süper Admin yetkilendirme |
+| Yönetim | Kart, kullanıcı, puan ve taktik değişimlerini yöneten kapsamlı admin paneli |
 
 ## Hızlı kurulum — Docker
 

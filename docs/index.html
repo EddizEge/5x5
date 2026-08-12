@@ -3,82 +3,501 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="5X5 Simülasyon Savaşları — beş branş, tek draft ve canlı maç deneyimi.">
+  <meta name="description" content="5X5 Simülasyon Savaşları — karakter kartlarını oluştur, ratinglerini belirle, takımını draft et ve beş branşta turnuvaya çık.">
   <meta property="og:title" content="5X5 — Simülasyon Savaşları">
-  <meta property="og:description" content="Kartlarını draft et, takımını kur ve beş farklı branşta canlı simülasyonları izle.">
+  <meta property="og:description" content="Kartını kur, takımını draft et ve LoL, Valorant, CS, Halı Saha ve FIFA'da arkadaşlarınla yarış.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://eddizege.github.io/5x5/">
-  <meta property="og:image" content="https://eddizege.github.io/5x5/concepts/beta-football-full-squads-v2.png">
-  <meta name="theme-color" content="#070913">
+  <meta name="theme-color" content="#0a0a0f">
   <title>5X5 — Simülasyon Savaşları</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
   <style>
-    :root { color-scheme: dark; --bg:#020712; --panel:#07101e; --text:#f4f3ef; --muted:#aeb6c5; --cyan:#27dbef; --pink:#ff4f9d; --lime:#c6f51b; }
+    :root {
+      color-scheme: dark;
+      --bg-primary: #0a0a0f;
+      --bg-secondary: #12121a;
+      --bg-tertiary: #1a1a2e;
+      --border: #2a2a3e;
+      --primary: #7c3aed;
+      --primary-light: #8b5cf6;
+      --primary-glow: rgba(124, 58, 237, .3);
+      --secondary: #06b6d4;
+      --accent: #f59e0b;
+      --success: #10b981;
+      --danger: #ef4444;
+      --text-primary: #e2e8f0;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --font: "Inter", sans-serif;
+      --mono: "JetBrains Mono", monospace;
+    }
+
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body { margin:0; min-height:100vh; color:var(--text); font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; background:radial-gradient(circle at 68% 20%,#0b1e372e 0,transparent 32%),var(--bg); }
-    a { color:inherit; }
-    .wrap { width:min(1120px,calc(100% - 36px)); margin:auto; position:relative; }
-    nav { display:flex; align-items:center; justify-content:space-between; padding:24px 0; border-bottom:1px solid #7f8ca736; }
-    .brand { color:var(--lime); font-family:Impact,"Arial Narrow",sans-serif; font-size:2rem; font-weight:900; letter-spacing:.04em; text-decoration:none; }
-    .navlink { color:var(--cyan); text-decoration:none; font-weight:700; }
-    .hero { min-height:76vh; display:grid; grid-template-columns:.82fr 1.18fr; align-items:center; gap:50px; padding:56px 0 88px; }
-    h1,h2 { font-family:Impact,"Arial Narrow",sans-serif; text-transform:uppercase; font-weight:900; }
-    h1 { font-size:clamp(4rem,7.6vw,7.2rem); line-height:.88; letter-spacing:-.035em; margin:0 0 28px; }
-    h1 span { display:block; color:var(--lime); }
-    .lead { color:var(--muted); font-size:clamp(1.05rem,2vw,1.35rem); line-height:1.65; max-width:660px; }
-    .actions { display:flex; flex-wrap:wrap; gap:14px; margin-top:34px; }
-    .button { display:inline-flex; align-items:center; justify-content:center; min-height:52px; padding:0 24px; border-radius:8px; text-decoration:none; font-size:1rem; font-weight:900; border:1px solid var(--cyan); color:var(--cyan); background:transparent; }
-    .button.primary { color:#081006; border-color:var(--lime); background:var(--lime); box-shadow:0 12px 34px #c6f51b1f; }
-    .visual { position:relative; }
-    .visual::before { content:"● LIVE"; position:absolute; z-index:2; top:18px; right:18px; padding:8px 11px; border:1px solid var(--pink); border-radius:5px; color:#fff; background:#4a1231e6; font-size:.68rem; font-weight:950; letter-spacing:.1em; }
-    .visual img { display:block; width:100%; border-radius:20px; border:1px solid #59698080; box-shadow:0 28px 80px #000b; }
-    section { padding:82px 0; }
-    h2 { font-size:clamp(3rem,6.3vw,5.9rem); line-height:.9; letter-spacing:-.025em; margin:0 0 40px; max-width:760px; }
-    h2 em { color:var(--lime); font-style:normal; }
-    .grid { display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid var(--lime); border-bottom:1px solid var(--lime); }
-    .card { min-height:200px; padding:28px 30px; border-right:1px solid #25d8ee88; }
-    .card:last-child { border-right:0; }
-    .card b { display:block; color:var(--lime); font-size:2rem; font-family:Impact,"Arial Narrow",sans-serif; letter-spacing:.03em; margin-bottom:30px; }
-    .card b span { color:var(--cyan); font-family:Inter,ui-sans-serif,system-ui,sans-serif; font-size:.82rem; letter-spacing:.16em; margin-left:12px; }
-    .card h3 { margin:0 0 10px; font-size:1.3rem; }
-    .card p { color:var(--muted); line-height:1.6; margin:0; }
-    .install { display:grid; grid-template-columns:.78fr 1.22fr; gap:42px; align-items:center; padding:44px; border-radius:22px; border:1px solid #25d8ee88; background:var(--panel); }
-    .install h2 { margin-bottom:22px; }
-    pre { margin:0; overflow:auto; padding:28px; border-radius:14px; background:#01040a; color:#f4f3ef; border:1px solid var(--cyan); font-size:.9rem; line-height:1.9; }
-    footer { display:flex; justify-content:space-between; gap:20px; padding:38px 0 48px; color:var(--muted); border-top:1px solid #ffffff12; }
-    @media (max-width:820px) { .hero,.install { grid-template-columns:1fr; } .hero { padding-top:42px; } .visual { order:-1; } .grid { grid-template-columns:1fr; } .card { border-right:0; border-bottom:1px solid #25d8ee66; } .card:last-child { border-bottom:0; } h1 { font-size:clamp(4rem,18vw,6.4rem); } .install { padding:28px; } footer { flex-direction:column; } }
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 18% 4%, rgba(124, 58, 237, .13), transparent 30rem),
+        radial-gradient(circle at 88% 28%, rgba(6, 182, 212, .06), transparent 28rem),
+        var(--bg-primary);
+      color: var(--text-primary);
+      font-family: var(--font);
+    }
+
+    button, a { font: inherit; }
+    a { color: inherit; }
+    button { color: inherit; }
+    :focus-visible { outline: 2px solid var(--primary-light); outline-offset: 4px; }
+
+    .shell { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid rgba(42, 42, 62, .8);
+      background: rgba(10, 10, 15, .78);
+      backdrop-filter: blur(18px);
+    }
+    .nav-inner { min-height: 68px; display: flex; align-items: center; gap: 32px; }
+    .brand {
+      color: #fff;
+      font-size: 1.55rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-decoration: none;
+      text-shadow: 0 0 18px rgba(124, 58, 237, .75);
+    }
+    .nav-links { display: flex; align-items: center; gap: 25px; margin-left: auto; }
+    .nav-links a { color: var(--text-secondary); font-size: .9rem; font-weight: 600; text-decoration: none; }
+    .nav-links a:hover { color: #fff; }
+    .nav-github {
+      min-height: 38px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 14px;
+      border: 1px solid var(--primary);
+      border-radius: 8px;
+      color: var(--primary-light) !important;
+    }
+    .nav-github:hover { background: var(--primary-glow); }
+
+    .hero {
+      min-height: 760px;
+      display: grid;
+      grid-template-columns: .82fr 1.18fr;
+      align-items: center;
+      gap: 58px;
+      padding: 76px 0 92px;
+    }
+    .hero h1 {
+      max-width: 590px;
+      margin: 0 0 26px;
+      color: #fff;
+      font-size: clamp(3rem, 5.7vw, 5.4rem);
+      line-height: .98;
+      letter-spacing: -.055em;
+    }
+    .hero h1 span {
+      display: block;
+      margin-top: 10px;
+      color: transparent;
+      background: linear-gradient(135deg, var(--primary-light), #a78bfa);
+      background-clip: text;
+      -webkit-background-clip: text;
+    }
+    .hero-copy > p { max-width: 570px; margin: 0; color: var(--text-secondary); font-size: 1.12rem; line-height: 1.75; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+    .button {
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 20px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: rgba(18, 18, 26, .72);
+      color: var(--text-primary);
+      font-size: .92rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+    }
+    .button:hover { transform: translateY(-2px); border-color: var(--primary-light); }
+    .button.primary { border: 0; background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: #fff; box-shadow: 0 12px 34px rgba(124, 58, 237, .22); }
+
+    .app-frame {
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: rgba(18, 18, 26, .84);
+      box-shadow: 0 28px 80px rgba(0, 0, 0, .44), 0 0 45px rgba(124, 58, 237, .07);
+    }
+    .app-bar { min-height: 52px; display: flex; align-items: center; gap: 10px; padding: 0 16px; border-bottom: 1px solid var(--border); }
+    .app-logo { font-weight: 800; letter-spacing: .1em; }
+    .server-chip { margin-left: auto; color: var(--accent); font: 700 .7rem var(--mono); }
+    .admin-chip { padding: 6px 10px; border: 1px solid var(--primary); border-radius: 6px; color: var(--primary-light); font-size: .72rem; font-weight: 700; }
+    .branch-tabs { display: grid; grid-template-columns: repeat(5, 1fr); padding: 12px; gap: 7px; border-bottom: 1px solid var(--border); }
+    .branch-tab {
+      min-height: 64px;
+      padding: 9px 5px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: rgba(10, 10, 15, .55);
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-size: .66rem;
+      font-weight: 700;
+      line-height: 1.25;
+      transition: border-color .2s ease, color .2s ease, background .2s ease;
+    }
+    .branch-tab strong { display: block; margin-bottom: 5px; color: var(--branch-color); font: 700 .74rem var(--mono); }
+    .branch-tab:hover, .branch-tab.active { border-color: var(--branch-color); color: #fff; background: color-mix(in srgb, var(--branch-color) 10%, rgba(10, 10, 15, .7)); }
+    .draft-head { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 15px 16px 7px; }
+    .draft-head strong { font-size: .82rem; }
+    #active-branch-label { color: var(--primary-light); }
+    .draft-head span { color: var(--text-muted); font: 500 .66rem var(--mono); }
+    .draft-cards { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; padding: 12px 16px 18px; }
+    .player-card { min-width: 0; padding: 13px 7px 11px; border: 1px solid var(--border); border-radius: 9px; background: rgba(10, 10, 15, .65); text-align: center; }
+    .player-card:first-child { border-color: var(--primary-light); box-shadow: inset 0 0 18px rgba(124, 58, 237, .08); }
+    .avatar { width: 48px; height: 48px; display: grid; place-items: center; margin: 0 auto 9px; border: 1px solid var(--border); border-radius: 50%; background: var(--bg-tertiary); font-size: 1.35rem; }
+    .player-card b { display: block; overflow: hidden; color: #fff; font-size: .68rem; text-overflow: ellipsis; white-space: nowrap; }
+    .player-card small { display: block; margin: 4px 0 10px; color: var(--text-muted); font-size: .57rem; }
+    .rating-label { color: var(--text-secondary); font-size: .58rem; }
+    .rating-value { margin-left: 4px; color: var(--primary-light); font: 700 .85rem var(--mono); }
+
+    section { padding: 94px 0; }
+    .section-heading { max-width: 830px; margin: 0 0 46px; }
+    .section-heading.center { margin-inline: auto; text-align: center; }
+    .section-heading h2 { margin: 0 0 15px; color: #fff; font-size: clamp(2.15rem, 4.6vw, 4rem); line-height: 1.05; letter-spacing: -.045em; }
+    .section-heading h2 span { color: var(--primary-light); }
+    .section-heading p { margin: 0; color: var(--text-secondary); line-height: 1.7; }
+
+    .branch-rail { display: grid; grid-template-columns: repeat(5, 1fr); border: 1px solid var(--border); border-radius: 16px; background: rgba(18, 18, 26, .72); }
+    .branch-item { position: relative; min-height: 265px; padding: 28px 23px; border-right: 1px solid var(--border); }
+    .branch-item:last-child { border-right: 0; }
+    .branch-item::before { content: ""; position: absolute; inset: 0 28px auto; height: 2px; background: var(--item-color); box-shadow: 0 0 14px color-mix(in srgb, var(--item-color) 55%, transparent); }
+    .branch-code { display: inline-grid; place-items: center; min-width: 48px; height: 40px; margin: 6px 0 24px; color: var(--item-color); font: 700 .82rem var(--mono); }
+    .branch-item h3 { min-height: 42px; margin: 0 0 15px; color: var(--item-color); font-size: .92rem; line-height: 1.35; }
+    .branch-item p { margin: 0; color: var(--text-secondary); font-size: .86rem; line-height: 1.65; }
+
+    .modes { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 18px; border: 1px solid var(--border); border-radius: 14px; background: rgba(18, 18, 26, .55); }
+    .mode { padding: 24px 28px; border-right: 1px solid var(--border); }
+    .mode:last-child { border-right: 0; }
+    .mode b { display: block; margin-bottom: 7px; color: var(--mode-color); font-size: .92rem; }
+    .mode span { color: var(--text-secondary); font-size: .86rem; }
+    .tournament-note { margin: 20px 0 0; padding: 20px 24px; border-left: 2px solid var(--primary); background: rgba(124, 58, 237, .06); color: var(--text-secondary); line-height: 1.7; }
+
+    .management-layout { display: grid; grid-template-columns: .78fr 1.22fr; gap: 55px; align-items: center; }
+    .feature-list { border-top: 1px solid var(--border); }
+    .feature-row { display: grid; grid-template-columns: 54px 1fr; gap: 16px; padding: 22px 0; border-bottom: 1px solid var(--border); }
+    .feature-number { color: var(--feature-color); font: 700 .83rem var(--mono); }
+    .feature-row h3 { margin: 0 0 7px; color: var(--feature-color); font-size: .94rem; }
+    .feature-row p { margin: 0; color: var(--text-secondary); font-size: .89rem; line-height: 1.65; }
+
+    .admin-demo { overflow: hidden; border: 1px solid var(--border); border-radius: 15px; background: rgba(18, 18, 26, .8); box-shadow: 0 24px 65px rgba(0, 0, 0, .36); }
+    .demo-title { min-height: 52px; display: flex; align-items: center; padding: 0 18px; border-bottom: 1px solid var(--border); color: #fff; font-weight: 800; }
+    .demo-tabs { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid var(--border); }
+    .demo-tab { min-height: 52px; border: 0; border-bottom: 2px solid transparent; background: transparent; color: var(--text-secondary); cursor: pointer; font-size: .73rem; font-weight: 600; }
+    .demo-tab:hover, .demo-tab.active { border-bottom-color: var(--primary); color: var(--primary-light); }
+    .demo-panel { display: none; min-height: 385px; padding: 18px; }
+    .demo-panel.active { display: block; }
+    .card-editor { display: grid; grid-template-columns: .88fr 1.12fr; gap: 16px; }
+    .editor-box { padding: 17px; border: 1px solid var(--border); border-radius: 10px; background: rgba(10, 10, 15, .48); }
+    .editor-box h4 { margin: 0 0 18px; color: var(--text-primary); font-size: .78rem; }
+    .fake-field { margin-bottom: 13px; }
+    .fake-field label { display: block; margin-bottom: 6px; color: var(--text-secondary); font-size: .68rem; }
+    .fake-input { min-height: 38px; display: flex; align-items: center; padding: 0 11px; border: 1px solid var(--border); border-radius: 7px; background: var(--bg-primary); color: var(--text-primary); font-size: .74rem; }
+    .save-button { min-height: 38px; display: grid; place-items: center; margin-top: 18px; border-radius: 7px; background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: #fff; font-size: .73rem; font-weight: 700; }
+    .rating-row { display: grid; grid-template-columns: 76px 30px 1fr; gap: 8px; align-items: center; min-height: 48px; border-bottom: 1px solid var(--border); }
+    .rating-row:last-child { border-bottom: 0; }
+    .rating-row span { font-size: .68rem; }
+    .rating-row b { color: #fff; font: 700 .73rem var(--mono); }
+    .rating-track { height: 4px; overflow: hidden; border-radius: 999px; background: var(--border); }
+    .rating-fill { height: 100%; width: var(--rating); border-radius: inherit; background: var(--rating-color); }
+    .user-list, .modifier-list { display: grid; gap: 10px; }
+    .user-row, .modifier-row { display: grid; grid-template-columns: 1.3fr .9fr .8fr; gap: 10px; align-items: center; padding: 14px; border: 1px solid var(--border); border-radius: 9px; background: rgba(10, 10, 15, .5); font-size: .75rem; }
+    .user-row span, .modifier-row span { color: var(--text-secondary); }
+    .role-badge { justify-self: start; padding: 5px 8px; border-radius: 5px; background: var(--primary-glow); color: var(--primary-light) !important; font-size: .65rem; font-weight: 700; }
+
+    .journey { display: grid; grid-template-columns: repeat(6, 1fr); margin-top: 44px; border: 1px solid var(--border); border-radius: 14px; background: var(--bg-secondary); }
+    .journey-step { position: relative; min-height: 122px; padding: 22px 15px; border-right: 1px solid var(--border); }
+    .journey-step:last-child { border-right: 0; }
+    .journey-step:not(:last-child)::after { content: "→"; position: absolute; top: 21px; right: -9px; z-index: 2; color: var(--text-muted); }
+    .journey-step b { display: block; margin-bottom: 17px; color: var(--step-color); font: 700 .78rem var(--mono); }
+    .journey-step span { color: var(--text-primary); font-size: .76rem; font-weight: 700; line-height: 1.45; }
+
+    .install {
+      display: grid;
+      grid-template-columns: .85fr 1.15fr;
+      gap: 50px;
+      align-items: center;
+      padding: 48px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: linear-gradient(130deg, rgba(124, 58, 237, .1), rgba(18, 18, 26, .82) 46%, rgba(6, 182, 212, .05));
+    }
+    .install h2 { margin: 0 0 15px; color: #fff; font-size: clamp(2rem, 4vw, 3.5rem); letter-spacing: -.045em; }
+    .install p { margin: 0; color: var(--text-secondary); line-height: 1.7; }
+    .credentials { margin-top: 18px !important; color: var(--text-muted) !important; font: 500 .73rem var(--mono); }
+    pre { margin: 0; overflow: auto; padding: 25px; border: 1px solid var(--border); border-radius: 11px; background: #08080d; color: var(--text-primary); font: 500 .78rem/1.9 var(--mono); }
+    pre .purple { color: var(--primary-light); }
+    pre .cyan { color: var(--secondary); }
+
+    footer { padding: 40px 0 52px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: .8rem; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 24px; }
+    footer strong { color: #fff; letter-spacing: .1em; text-shadow: 0 0 14px var(--primary-glow); }
+
+    @media (max-width: 980px) {
+      .hero, .management-layout, .install { grid-template-columns: 1fr; }
+      .hero { padding-top: 64px; }
+      .hero-copy { max-width: 720px; }
+      .branch-rail { grid-template-columns: repeat(2, 1fr); }
+      .branch-item { border-bottom: 1px solid var(--border); }
+      .branch-item:nth-child(2n) { border-right: 0; }
+      .branch-item:last-child { grid-column: 1 / -1; border-bottom: 0; }
+      .journey { grid-template-columns: repeat(3, 1fr); }
+      .journey-step:nth-child(3) { border-right: 0; }
+      .journey-step:nth-child(-n+3) { border-bottom: 1px solid var(--border); }
+      .journey-step:nth-child(3)::after { display: none; }
+    }
+
+    @media (max-width: 720px) {
+      .shell { width: min(100% - 28px, 1180px); }
+      .nav-inner { min-height: 62px; }
+      .nav-links a:not(.nav-github) { display: none; }
+      .hero { min-height: auto; gap: 42px; padding: 58px 0 78px; }
+      .hero h1 { font-size: clamp(3rem, 14vw, 4.7rem); }
+      .branch-tabs { grid-template-columns: repeat(5, minmax(90px, 1fr)); overflow-x: auto; }
+      .draft-cards { grid-template-columns: repeat(5, minmax(105px, 1fr)); overflow-x: auto; }
+      section { padding: 74px 0; }
+      .section-heading h2 { font-size: clamp(2.2rem, 10vw, 3.4rem); }
+      .branch-rail, .modes { grid-template-columns: 1fr; }
+      .branch-item, .mode { min-height: auto; border-right: 0; border-bottom: 1px solid var(--border); }
+      .branch-item:last-child, .mode:last-child { border-bottom: 0; }
+      .card-editor { grid-template-columns: 1fr; }
+      .demo-tabs { grid-template-columns: 1fr; }
+      .demo-tab { min-height: 44px; border-bottom: 1px solid var(--border); }
+      .demo-tab.active { border-bottom-color: var(--primary); }
+      .journey { grid-template-columns: 1fr 1fr; }
+      .journey-step { border-bottom: 1px solid var(--border); }
+      .journey-step:nth-child(2n) { border-right: 0; }
+      .journey-step:nth-child(3) { border-right: 1px solid var(--border); }
+      .journey-step:nth-child(3)::after { display: block; }
+      .journey-step:nth-child(2n)::after, .journey-step:nth-last-child(-n+2)::after { display: none; }
+      .install { padding: 28px 23px; }
+      .footer-inner { flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition: none !important; }
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <nav><a class="brand" href="#">5X5</a><a class="navlink" href="https://github.com/EddizEge/5x5">GitHub ↗</a></nav>
-    <main>
-      <div class="hero">
-        <div>
-          <h1>SIMÜLASYON <span>SAVAŞLARI</span></h1>
-          <p class="lead">Karakter kartlarını draft et. Takımını ve oyun planını kur. Futboldan Dust II'ye uzanan canlı maç motorlarında arkadaşlarına meydan oku.</p>
-          <div class="actions"><a class="button primary" href="https://github.com/EddizEge/5x5/releases/latest">Son sürümü indir</a><a class="button" href="#ozellikler">Oyunu keşfet</a></div>
-        </div>
-        <div class="visual"><img src="concepts/beta-football-full-squads-v2.png" alt="5X5 canlı futbol simülasyonu ekranı"></div>
+  <nav class="site-nav" aria-label="Ana navigasyon">
+    <div class="shell nav-inner">
+      <a class="brand" href="#top" aria-label="5X5 ana sayfa">5X5</a>
+      <div class="nav-links">
+        <a href="#oyun">Oyun</a>
+        <a href="#branslar">5 Branş</a>
+        <a href="#yonetim">Yönetim</a>
+        <a href="#kurulum">Kurulum</a>
+        <a class="nav-github" href="https://github.com/EddizEge/5x5">GitHub ↗</a>
       </div>
-      <section id="ozellikler">
-        <h2>Bir <em>drafttan</em> çok daha fazlası.</h2>
-        <div class="grid">
-          <article class="card"><b>01 <span>/ DRAFT</span></b><h3>Kendi beşlini kur</h3><p>Dönem kartları, branşa özel puanlar ve rol tercihleriyle her turnuvada farklı bir takım yarat.</p></article>
-          <article class="card"><b>02 <span>/ TAKTİK</span></b><h3>Planını sahaya yansıt</h3><p>Basit, Taktiksel ve Beta modlarıyla tempoyu, rolleri ve oyun stilini sen belirle.</p></article>
-          <article class="card"><b>03 <span>/ CANLI</span></b><h3>Her aksiyonu izle</h3><p>Canlı anlatım, konumsal futbol, Dust II çatışmaları ve ayrıntılı performans merkeziyle maçın içinde kal.</p></article>
+    </div>
+  </nav>
+
+  <main id="top">
+    <div class="shell">
+      <section class="hero" id="oyun">
+        <div class="hero-copy">
+          <h1>Kartını kur. <span>Beş branşta savaş.</span></h1>
+          <p>Kendi karakter kartlarını oluştur, ratinglerini belirle, takımını draft et ve arkadaşlarınla beş farklı branşta turnuvaya çık.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="#yonetim">Oyunu keşfet</a>
+            <a class="button" href="https://github.com/EddizEge/5x5">GitHub'da incele</a>
+          </div>
+        </div>
+
+        <div class="app-frame" aria-label="Etkileşimli 5X5 draft önizlemesi">
+          <div class="app-bar"><span class="app-logo">5X5</span><span class="server-chip">OIMSFKTS</span><span class="admin-chip">⚙ Admin</span></div>
+          <div class="branch-tabs" role="tablist" aria-label="Branş rating önizlemesi">
+            <button class="branch-tab active" role="tab" aria-selected="true" data-branch="lol" style="--branch-color:#8b5cf6"><strong>LOL</strong>League of Legends</button>
+            <button class="branch-tab" role="tab" aria-selected="false" data-branch="valorant" style="--branch-color:#06b6d4"><strong>VAL</strong>Valorant</button>
+            <button class="branch-tab" role="tab" aria-selected="false" data-branch="cs" style="--branch-color:#60a5fa"><strong>CS</strong>Counter-Strike</button>
+            <button class="branch-tab" role="tab" aria-selected="false" data-branch="futbol" style="--branch-color:#f59e0b"><strong>HS</strong>Halı Saha</button>
+            <button class="branch-tab" role="tab" aria-selected="false" data-branch="fifa" style="--branch-color:#10b981"><strong>FIFA</strong>11v11</button>
+          </div>
+          <div class="draft-head"><strong>DRAFT · <span id="active-branch-label">LEAGUE OF LEGENDS</span></strong><span>Kart seçimi · 0–100 rating</span></div>
+          <div class="draft-cards">
+            <div class="player-card"><div class="avatar">🎮</div><b>Oyuncu 01</b><small>24 Yaş · Prime</small><span class="rating-label">Rating</span><span class="rating-value">89</span></div>
+            <div class="player-card"><div class="avatar">🎯</div><b>Oyuncu 02</b><small>20 Yaş · Genç</small><span class="rating-label">Rating</span><span class="rating-value">84</span></div>
+            <div class="player-card"><div class="avatar">⚡</div><b>Oyuncu 03</b><small>Genel Kart</small><span class="rating-label">Rating</span><span class="rating-value">78</span></div>
+            <div class="player-card"><div class="avatar">🛡️</div><b>Oyuncu 04</b><small>24 Yaş · Prime</small><span class="rating-label">Rating</span><span class="rating-value">91</span></div>
+            <div class="player-card"><div class="avatar">🔥</div><b>Oyuncu 05</b><small>20 Yaş · Genç</small><span class="rating-label">Rating</span><span class="rating-value">75</span></div>
+          </div>
         </div>
       </section>
-      <section>
+    </div>
+
+    <section id="branslar">
+      <div class="shell">
+        <div class="section-heading center">
+          <h2>Beş branş. <span>Tek turnuva.</span></h2>
+          <p>Her branş kendi maç kurallarına ve canlı anlatımına sahip; seçtiğin kartların ratingleri her oyunda ayrı güç üretir.</p>
+        </div>
+        <div class="branch-rail">
+          <article class="branch-item" style="--item-color:#8b5cf6"><span class="branch-code">LOL</span><h3>LEAGUE OF LEGENDS</h3><p>Kule, ejderha, Baron, K/D/A ve canlı takım durumu.</p></article>
+          <article class="branch-item" style="--item-color:#06b6d4"><span class="branch-code">VAL</span><h3>VALORANT</h3><p>Raundlar, kill akışı, spike olayları ve canlı anlatım.</p></article>
+          <article class="branch-item" style="--item-color:#60a5fa"><span class="branch-code">CS</span><h3>COUNTER-STRIKE</h3><p>Klasik maçlar ve Dust II görsel Beta raundları.</p></article>
+          <article class="branch-item" style="--item-color:#f59e0b"><span class="branch-code">HS</span><h3>HALI SAHA</h3><p>5 karakter + bot kaleciyle hızlı Futbol V2 maçları.</p></article>
+          <article class="branch-item" style="--item-color:#10b981"><span class="branch-code">FIFA</span><h3>FIFA</h3><p>Draft kartları ve botlarla tamamlanan 11v11 kadrolar.</p></article>
+        </div>
+        <div class="modes">
+          <div class="mode" style="--mode-color:#8b5cf6"><b>BASİT MOD</b><span>Doğrudan simülasyon</span></div>
+          <div class="mode" style="--mode-color:#f59e0b"><b>TAKTİKSEL MOD</b><span>Stil, rol ve mevki seçimleri</span></div>
+          <div class="mode" style="--mode-color:#10b981"><b>BETA LOBİSİ</b><span>En yeni görsel motorlar</span></div>
+        </div>
+        <p class="tournament-note">Canlı anlatım, maç istatistikleri ve branş branş puanlanan turnuva tablosu her modda oyunun merkezinde.</p>
+      </div>
+    </section>
+
+    <section id="yonetim">
+      <div class="shell">
+        <div class="management-layout">
+          <div>
+            <div class="section-heading">
+              <h2>Karttan turnuvaya <span>her şey senin kontrolünde.</span></h2>
+              <p>5X5 yalnızca maç izletmez; oyunun karakter, kullanıcı ve denge sistemini doğrudan yönetmeni sağlar.</p>
+            </div>
+            <div class="feature-list">
+              <article class="feature-row" style="--feature-color:#8b5cf6"><span class="feature-number">01</span><div><h3>KARAKTER OLUŞTUR</h3><p>İsim, emoji ve dönem kartlarını yönet.</p></div></article>
+              <article class="feature-row" style="--feature-color:#06b6d4"><span class="feature-number">02</span><div><h3>RATINGLERİ BELİRLE</h3><p>LoL, Valorant, CS, Halı Saha ve FIFA gücünü 0–100 aralığında ayrı ayrı ayarla.</p></div></article>
+              <article class="feature-row" style="--feature-color:#f59e0b"><span class="feature-number">03</span><div><h3>KULLANICILARI YÖNET</h3><p>Oyuncu, sunucu admini ve süper admin rollerini düzenle.</p></div></article>
+            </div>
+          </div>
+
+          <div class="admin-demo" aria-label="Etkileşimli admin paneli önizlemesi">
+            <div class="demo-title">5X5 · Admin Paneli</div>
+            <div class="demo-tabs" role="tablist" aria-label="Yönetim özellikleri">
+              <button class="demo-tab active" role="tab" aria-selected="true" data-panel="cards">Karakterler & Dönemler</button>
+              <button class="demo-tab" role="tab" aria-selected="false" data-panel="users">Kullanıcı Yönetimi</button>
+              <button class="demo-tab" role="tab" aria-selected="false" data-panel="tactics">Taktiksel Değişimler</button>
+            </div>
+
+            <div class="demo-panel active" id="panel-cards" role="tabpanel">
+              <div class="card-editor">
+                <div class="editor-box">
+                  <h4>KARAKTER BİLGİLERİ</h4>
+                  <div class="fake-field"><label>Karakter Adı</label><div class="fake-input">Oyuncu 01</div></div>
+                  <div class="fake-field"><label>Emoji</label><div class="fake-input">🎮</div></div>
+                  <div class="fake-field"><label>Dönem / Yaş</label><div class="fake-input">24 Yaş · Prime</div></div>
+                  <div class="save-button">Kaydet</div>
+                </div>
+                <div class="editor-box">
+                  <h4>RATINGLER (0–100)</h4>
+                  <div class="rating-row"><span>LoL</span><b>86</b><div class="rating-track"><div class="rating-fill" style="--rating:86%;--rating-color:#8b5cf6"></div></div></div>
+                  <div class="rating-row"><span>Valorant</span><b>91</b><div class="rating-track"><div class="rating-fill" style="--rating:91%;--rating-color:#06b6d4"></div></div></div>
+                  <div class="rating-row"><span>CS</span><b>84</b><div class="rating-track"><div class="rating-fill" style="--rating:84%;--rating-color:#60a5fa"></div></div></div>
+                  <div class="rating-row"><span>Halı Saha</span><b>78</b><div class="rating-track"><div class="rating-fill" style="--rating:78%;--rating-color:#f59e0b"></div></div></div>
+                  <div class="rating-row"><span>FIFA</span><b>82</b><div class="rating-track"><div class="rating-fill" style="--rating:82%;--rating-color:#10b981"></div></div></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="demo-panel" id="panel-users" role="tabpanel">
+              <div class="user-list">
+                <div class="user-row"><b>Admin</b><span>OIMSFKTS</span><span class="role-badge">Süper Admin</span></div>
+                <div class="user-row"><b>Oyuncu 01</b><span>OIMSFKTS</span><span class="role-badge">Sunucu Admini</span></div>
+                <div class="user-row"><b>Oyuncu 02</b><span>YENİ SERVER</span><span class="role-badge">Oyuncu</span></div>
+              </div>
+            </div>
+
+            <div class="demo-panel" id="panel-tactics" role="tabpanel">
+              <div class="modifier-list">
+                <div class="modifier-row"><b>LoL · Agresif</b><span>Stil değişimi</span><span class="role-badge">+4</span></div>
+                <div class="modifier-row"><b>Valorant · Duelist</b><span>Rol değişimi</span><span class="role-badge">+3</span></div>
+                <div class="modifier-row"><b>Halı Saha · Defans</b><span>Mevki değişimi</span><span class="role-badge">+5</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="journey" aria-label="5X5 oyun akışı">
+          <div class="journey-step" style="--step-color:#8b5cf6"><b>01</b><span>HESAP<br>OLUŞTUR</span></div>
+          <div class="journey-step" style="--step-color:#a78bfa"><b>02</b><span>KARTLARI<br>HAZIRLA</span></div>
+          <div class="journey-step" style="--step-color:#06b6d4"><b>03</b><span>LOBİ<br>KUR</span></div>
+          <div class="journey-step" style="--step-color:#60a5fa"><b>04</b><span>DRAFT<br>YAP</span></div>
+          <div class="journey-step" style="--step-color:#f59e0b"><b>05</b><span>5 BRANŞTA<br>OYNA</span></div>
+          <div class="journey-step" style="--step-color:#10b981"><b>06</b><span>TURNUVAYI<br>KAZAN</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="kurulum">
+      <div class="shell">
         <div class="install">
-          <div><h2>Üç komutta <em>oyundasın.</em></h2><p class="lead">Docker kurulumu boş bir veritabanı oluşturur; gerçek proje verileri pakete dahil değildir.</p></div>
-          <pre><code>git clone https://github.com/EddizEge/5x5.git
-cd 5x5
-docker compose up -d --build</code></pre>
+          <div>
+            <h2>Kendi 5X5 sunucunu kur.</h2>
+            <p>Docker ile boş veritabanı, ilk admin hesabı ve tüm oyun motorları tek kurulumda hazır. Gerçek proje verileri pakete dahil değildir.</p>
+            <p class="credentials">Varsayılan yerel hesap: admin / 5x5admin</p>
+          </div>
+          <pre><code><span class="purple">git clone</span> https://github.com/EddizEge/5x5.git
+<span class="cyan">cd</span> 5x5
+<span class="purple">docker compose</span> up -d --build
+
+# http://localhost:3000</code></pre>
         </div>
-      </section>
-    </main>
-    <footer><span>5X5 — Simülasyon Savaşları</span><span>Node.js · Socket.IO · SQLite</span></footer>
-  </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell footer-inner">
+      <span><strong>5X5</strong> — Simülasyon Savaşları</span>
+      <span>Node.js · Socket.IO · SQLite</span>
+    </div>
+  </footer>
+
+  <script>
+    const branchData = {
+      lol: { label: 'LEAGUE OF LEGENDS', ratings: [89, 84, 78, 91, 75], color: '#8b5cf6' },
+      valorant: { label: 'VALORANT', ratings: [82, 94, 88, 76, 85], color: '#06b6d4' },
+      cs: { label: 'COUNTER-STRIKE', ratings: [87, 91, 86, 80, 83], color: '#60a5fa' },
+      futbol: { label: 'HALI SAHA', ratings: [79, 85, 90, 82, 77], color: '#f59e0b' },
+      fifa: { label: 'FIFA', ratings: [84, 80, 88, 92, 78], color: '#10b981' }
+    };
+
+    document.querySelectorAll('.branch-tab').forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const data = branchData[tab.dataset.branch];
+        document.querySelectorAll('.branch-tab').forEach((item) => {
+          item.classList.toggle('active', item === tab);
+          item.setAttribute('aria-selected', item === tab ? 'true' : 'false');
+        });
+        document.getElementById('active-branch-label').textContent = data.label;
+        document.querySelectorAll('.rating-value').forEach((rating, index) => {
+          rating.textContent = data.ratings[index];
+          rating.style.color = data.color;
+        });
+      });
+    });
+
+    document.querySelectorAll('.demo-tab').forEach((tab) => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.demo-tab').forEach((item) => {
+          item.classList.toggle('active', item === tab);
+          item.setAttribute('aria-selected', item === tab ? 'true' : 'false');
+        });
+        document.querySelectorAll('.demo-panel').forEach((panel) => panel.classList.remove('active'));
+        document.getElementById(`panel-${tab.dataset.panel}`).classList.add('active');
+      });
+    });
+  </script>
 </body>
 </html>
