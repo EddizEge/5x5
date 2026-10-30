@@ -1,6 +1,6 @@
 {
   "name": "5x5",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "5X5 - Multiplayer text-based simulation game",
   "main": "server/index.js",
   "scripts": {

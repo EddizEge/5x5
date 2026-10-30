@@ -2,6 +2,18 @@
 
 Bu projedeki önemli değişiklikler bu dosyada belgelenir.
 
+## [1.0.1] - 2026-10-30
+
+### Güvenlik
+
+- Yönetici hesabı artık herkesçe bilinen varsayılan parolayla oluşturulmuyor. `ADMIN_PASSWORD` verilmezse kuruluma özel rastgele parola üretilir ve `data/.admin-initial-password` dosyasına yazılır.
+- Eski varsayılan parolayla kalmış yönetici hesabı ilk açılışta otomatik olarak yeni parolaya geçirilir. v1.0.0 kurulumlarının güncellenmesi önerilir.
+
+### Değişti
+
+- Valve haritasından türetilen Dust II çarpışma ağı depodan çıkarıldı. `npm run fetch:dust2` ve Docker derlemesi dosyayı Awpy paketinden indirip SHA-256 ile doğrular.
+- Counter-Strike beta notları `docs/` klasörüne taşındı.
+
 ## [1.0.0] - 2026-08-12
 
 ### Eklendi
@@ -20,4 +32,5 @@ Bu projedeki önemli değişiklikler bu dosyada belgelenir.
 - Temiz kurulum yalnız ilk admin hesabını oluşturur; demo karakterleri isteğe bağlıdır.
 - JWT anahtarı verilmezse kuruluma özel kalıcı anahtar otomatik üretilir.
 
+[1.0.1]: https://github.com/EddizEge/5x5/releases/tag/v1.0.1
 [1.0.0]: https://github.com/EddizEge/5x5/releases/tag/v1.0.0
