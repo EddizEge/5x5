@@ -13,6 +13,12 @@ node_modules/
 *.sqlite
 *.sqlite3
 
+# Valve haritasından türetilen çarpışma ağı; npm run fetch:dust2 ile indirilir
+/server/simulation/data/de_dust2.tri
+
+# Yerelde tutulan ajan notları
+/AGENTS.md
+
 # Logs, temporary output, and local work artifacts
 *.log
 docker_logs.txt

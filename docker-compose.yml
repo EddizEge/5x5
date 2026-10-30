@@ -9,7 +9,7 @@ services:
     environment:
       - JWT_SECRET=${JWT_SECRET:-}
       - ADMIN_USERNAME=${ADMIN_USERNAME:-admin}
-      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-5x5admin}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-}
       - SEED_DEMO_DATA=${SEED_DEMO_DATA:-false}
       - FOOTBALL_V2_BETA_LOBBY=${FOOTBALL_V2_BETA_LOBBY:-true}
       - PORT=3000

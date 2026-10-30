@@ -1,11 +1,12 @@
 {
   "name": "5x5",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "5X5 - Multiplayer text-based simulation game",
   "main": "server/index.js",
   "scripts": {
     "start": "node server/index.js",
     "dev": "node --watch server/index.js",
+    "fetch:dust2": "node scripts/fetch-dust2-collision.js",
     "test:cs-combat": "node scripts/test-cs-combat.js",
     "test:cs-bomb-damage": "node scripts/test-cs-bomb-damage.js",
     "test:cs-economy": "node scripts/test-cs-economy.js",
