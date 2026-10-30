@@ -39,12 +39,9 @@ Ardından [http://localhost:3000](http://localhost:3000) adresini açın.
 
 İlk çalıştırmada uygulama yeni `data/5x5.db` dosyasını otomatik oluşturur. Veritabanında yalnızca ilk yönetici hesabı bulunur; kullanıcı, karakter, sohbet ve maç verileri boş başlar.
 
-Varsayılan yerel yönetici hesabı:
+İlk yönetici hesabının kullanıcı adı `admin`'dir (`ADMIN_USERNAME` ile değiştirilebilir). Parolayı `.env.example` dosyasını `.env` adıyla kopyalayıp `ADMIN_PASSWORD` ile belirleyin. Boş bırakılırsa uygulama kuruluma özel rastgele bir parola üretir ve `data/.admin-initial-password` dosyasına yazar. Eski sürümlerin herkese açık varsayılan parolasıyla kalmış bir yönetici hesabı açılışta otomatik olarak yeni parolaya geçirilir.
 
-- Kullanıcı adı: `admin`
-- Şifre: `5x5admin`
-
-Admin panelinden kendi karakterlerinizi ve dönem kartlarınızı ekleyebilirsiniz. İnternete açık bir kurulumdan önce `.env.example` dosyasını `.env` adıyla kopyalayın ve en azından `ADMIN_PASSWORD` değerini değiştirin. `JWT_SECRET` boş bırakılırsa uygulama `data/.jwt-secret` içinde kuruluma özel güvenli bir anahtar üretir.
+Admin panelinden kendi karakterlerinizi ve dönem kartlarınızı ekleyebilirsiniz. `JWT_SECRET` boş bırakılırsa uygulama `data/.jwt-secret` içinde kuruluma özel güvenli bir anahtar üretir.
 
 Genel demo karakterleriyle başlamak isterseniz `.env` içinde `SEED_DEMO_DATA=true` kullanabilirsiniz. Varsayılan değer `false` olduğu için temiz kurulum her zaman boş başlar.
 
@@ -59,6 +56,8 @@ npm start
 ```
 
 Windows dışındaki sistemlerde ikinci komut yerine `cp .env.example .env` kullanabilirsiniz.
+
+Counter-Strike beta, Valve haritasından türetilen Dust II çarpışma ağını kullanır. Bu dosya depoda tutulmaz; `npm run fetch:dust2` Awpy paketinden indirip SHA-256 ile doğrular. Docker derlemesi bunu kendiliğinden yapar. Dosya yoksa CS beta yalnız nav verisiyle çalışır.
 
 ## Testler
 
@@ -80,7 +79,7 @@ Diğer hedefli testler `package.json` içindeki `test:*` komutlarında listeleni
 - Frontend: Vanilla JavaScript, HTML ve CSS
 - Dağıtım: Docker / Docker Compose
 
-Uygulama kaynakları `server/`, `public/` ve `scripts/` klasörlerinde bulunur. Ayrıntılı simülasyon mimarisi ve proje kuralları `AGENTS.md` içinde belgelenmiştir.
+Uygulama kaynakları `server/`, `public/` ve `scripts/` klasörlerinde bulunur. Counter-Strike beta sürüm notları ve yol haritası `docs/` klasöründedir.
 
 ## Veri güvenliği
 

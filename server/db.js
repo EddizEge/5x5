@@ -5,6 +5,7 @@
 
 const path = require('path');
 const fs = require('fs');
+const crypto = require('crypto');
 const Database = require('better-sqlite3');
 const bcrypt = require('bcryptjs');
 
@@ -243,22 +244,42 @@ try {
 }
 
 // ============================================
-// Varsayılan Admin Kullanıcısı
+// İlk Admin Kullanıcısı
 // ============================================
+
+// Eski sürümlerin README'de yazan varsayılan parolası; artık hiçbir kurulumda kabul edilmez.
+const LEGACY_DEFAULT_ADMIN_PASSWORD = '5x5admin';
+
+// ADMIN_PASSWORD verilmezse kuruluma özel rastgele parola üretilir ve yalnızca data/ altına yazılır.
+function resolveAdminPassword() {
+  const configured = (process.env.ADMIN_PASSWORD || '').trim();
+  if (configured && configured !== LEGACY_DEFAULT_ADMIN_PASSWORD) return configured;
+
+  const password = crypto.randomBytes(18).toString('base64url');
+  const passwordPath = path.join(dbDir, '.admin-initial-password');
+  fs.writeFileSync(passwordPath, `${password}\n`, { encoding: 'utf8', mode: 0o600 });
+  console.warn(`[DB] ADMIN_PASSWORD tanımlı değil; admin parolası üretildi ve ${passwordPath} dosyasına yazıldı.`);
+  return password;
+}
+
 try {
   const adminUsername = process.env.ADMIN_USERNAME || 'admin';
-  const adminPassword = process.env.ADMIN_PASSWORD || '5x5admin';
 
   // Admin kullanıcısının var olup olmadığını kontrol et
-  const existingAdmin = db.prepare('SELECT id FROM users WHERE username = ?').get(adminUsername);
+  const existingAdmin = db.prepare('SELECT id, password_hash FROM users WHERE username = ?').get(adminUsername);
 
   if (!existingAdmin) {
-    const hashedPassword = bcrypt.hashSync(adminPassword, 10);
+    const hashedPassword = bcrypt.hashSync(resolveAdminPassword(), 10);
     db.prepare(`
       INSERT INTO users (username, password_hash, display_name, is_admin)
       VALUES (?, ?, ?, 1)
     `).run(adminUsername, hashedPassword, 'Admin');
-    console.log('[DB] Varsayılan admin kullanıcısı oluşturuldu:', adminUsername);
+    console.log('[DB] İlk admin kullanıcısı oluşturuldu:', adminUsername);
+  } else if (bcrypt.compareSync(LEGACY_DEFAULT_ADMIN_PASSWORD, existingAdmin.password_hash)) {
+    // Herkese açık eski varsayılan parolayla kalmış hesap açılışta yeni parolaya geçirilir.
+    const hashedPassword = bcrypt.hashSync(resolveAdminPassword(), 10);
+    db.prepare('UPDATE users SET password_hash = ? WHERE id = ?').run(hashedPassword, existingAdmin.id);
+    console.warn('[DB] Admin hesabı eski varsayılan parolayı kullanıyordu; parola değiştirildi.');
   } else {
     console.log('[DB] Admin kullanıcısı zaten mevcut, atlanıyor');
   }
